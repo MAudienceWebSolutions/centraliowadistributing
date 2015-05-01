@@ -1,0 +1,2 @@
+<div id="<?php echo $this->id; ?>" class="container-holder user-container container-<?php echo $this->id; ?>" data-profile-role="<?php echo $profile_role ?>"></div>
+<?php echo $this->get_nonce_field(); ?>

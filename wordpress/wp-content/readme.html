@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>WordPress Theme Read Me</title>
+	<style type="text/css" media="screen">
+		* { padding:0; margin:0; }
+		
+		body {
+			font-family: Georgia, sans-serif;
+			font-size: 13px;
+			line-height: 1.4;
+			background: #f5f5f5;
+			padding: 20px;
+		}
+		
+		#wrapper { width:1000px; margin:0 auto; padding:20px; background:#fff; -moz-border-radius: 20px; -webkit-border-radius: 20px; border-radius: 20px; }
+		
+		#summary-holder { margin: 10px 0 10px 30px; }
+		#summary-holder ol { margin: 0; padding: 0; }
+		#summary-holder ol li { margin: 0 0 0 30px; border: none; }
+		#summary-holder ol li li { padding-top: 3px; }
+		#summary-holder ol li a { color: #8B0000; font: normal 12px Verdana, Arial, Helvetica, sans-serif; text-decoration: none; }
+		#summary-holder ol li a:hover { color: #600; text-decoration: underline; }
+		
+		ol { counter-reset: second_heading; }
+		h1 { color: #8B0000; font-size: 2em; padding-bottom:10px; margin-bottom: 10px; border-bottom: solid 1px #eee; }
+		h2 { font-size: 1.8em; margin-bottom: 6px; counter-reset: third_heading; }
+		ol > li > h2:before { content: counter(second_heading) ". "; counter-increment: second_heading; }
+		h3 { font-size: 1.3em; margin-bottom: 6px; counter-reset: fourth_heading; }
+		ol > li > h3:before { content: counter(third_heading) ". "; counter-increment: third_heading; }
+		h4 { font-size: 1.1em; margin-bottom: 4px; }
+		ol > li > h4:before { content: counter(fourth_heading) ". "; counter-increment: fourth_heading; }
+		
+		ol { padding: 10px 0 0; list-style-type: none; }
+		li { padding-top: 8px; margin: 6px 0 0 30px; border-top:solid 1px #eee; }
+		li:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+		li li { list-style-position: outside; }
+		li ul li { margin-left: 40px; }
+		
+		p { font-size:1em; padding: 0 0 10px; }
+		small { font-size:0.9em; font-weight:normal; }
+		
+		code {
+			display:block;
+			background: #FFFFE0;
+			border:solid 1px #ddd;
+			margin:10px 0;
+			padding:5px;
+			font-weight:bold;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+			white-space: pre-wrap;
+		}
+		
+		.red { color:red; }
+		strong.red { font-size:1.5em }
+		
+		.admin-path { background: #eee; padding: 2px 5px; }
+	</style>
+	<!--[if lt IE 8]>
+	<style type="text/css" media="screen">
+	ol { list-style-type: decimal; }
+	</style>
+	<![endif]-->
+	<script type="text/javascript" language="javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript">
+	jQuery(function($) {
+		var topDepth = 2; // the depth of the outmost
+		var summary = '<ol>';
+		var headings = $('h2, h3, h4, h5, h6').filter('[id]');
+		
+		function depth(item) {
+			switch (item.tagName) {
+				case 'H1':
+				case 'H2':
+				case 'H3':
+				case 'H4':
+				case 'H5':
+				case 'H6':
+					return item.tagName.substr(1, 1);
+					break;
+				default:
+					return 0;
+			}
+		}
+		
+		for (var i=0; i<headings.length; ++i) {
+			var item = headings[i];
+			if (typeof(item) != 'object') continue;
+			var previous = headings[i-1];
+			var next = headings[i+1];
+			
+			if (typeof(previous) != 'undefined') {
+				if (depth(previous) > depth(item)) {
+					for (var j=0; j < depth(previous) - depth(item); ++j) {
+						summary += '</li></ol></li>';
+					}
+				} else if (depth(previous) == depth(item)) {
+					summary += '</li>';
+				}
+			}
+			
+			summary += '<li><a href="#' + $(item).attr('id') + '">' + $(item).text() + '</a>';
+			
+			if (typeof(next) != 'undefined') {
+				if (depth(next) - depth(item) == 1) {
+					summary += '<ol>';
+				}
+			} else {
+				summary += '</li>';
+			}
+		}
+		
+		for (var i=0; i<depth(headings[headings.length-1]) - topDepth; ++i) {
+			summary += '</ol></li>';
+		}
+		
+		summary += '</ol>';
+		$('#summary-holder').append(summary);
+	});
+	</script>
+</head>
+<body>
+<div id="wrapper">
+	<h1>Central Iowa Distributing WordPress Theme Read Me</h1>
+	<p>This document describes how to install and use your WordPress theme. </p>
+	<div id="summary-holder">
+		<h2>Summary</h2>
+	</div>
+	<ol>
+		<li>
+			<h2 id="plugins">Plugins</h2>
+			<ol>
+				<li>
+					<h3 id="woocommerce-plugin">Activate the &quot;WooCommerce&quot; plugin</h3>
+					<p>Go to <span class="admin-path">WooCommerce &raquo; Settings</span> and setup plugin options</p>
+				</li>
+				<li>
+					<h3 id="hellow-world-plugin">Activate the &quot;Gravity Forms&quot; plugin</h3>
+					<p>Go to <span class="admin-path">Forms &raquo; Settings</span> and setup plugin options</p>
+				</li>
+			</ol>
+		</li>
+		<li>
+			<h2 id="content-management">Content Management</h2>
+			<ol id="inline-readme">
+				<li>
+					<h3 id="custom-post-types">Custom Post Types</h3>
+					<ul>
+						<li>
+							<h4 id="other-template">Product</h4>
+							<p>The products of the site are handled through the <strong>Products</strong> custom post type.</p>
+						</li>
+					</ul>
+					
+				</li>
+				<li>
+					<h3 id="page-templates">Page Templates</h3>
+					<ul>
+						<li>
+							<h4 id="default-template">Default Template</h4>
+							<p>This is the template that will be used by all pages by default.</p>
+							<p>The template displays page title and page content.</p>
+						</li>
+						<li>
+							<h4 id="home-template">Home</h4>
+							<p>The home page is divided into three sections.</p>
+							<p>The top section shows a image slider. Slides can be managed by "Homepage Slider" custom repeater field located under the WYSIWYG editor.</p>
+							<p>The middle section the selected 3 featured products by "Select 3 products" custom field located in the "Featured Products" panel under the WYSIWYG editor.</p>
+							<p>The bottom section shows a custom entries(image/title/text/link) managed by custom fields in the "Homepage Services Section" panel.</p>
+						</li>
+					</ul>
+				</li>
+			    <li>
+					<h3 id="theme-options">Theme Options</h3>
+					<p>Go to <span class="admin-path">Theme Options &raquo; General</span> and setup theme options</p>
+					<p>Allows you to change your logo, custom button and text in the header.</p>
+					<p>Another options are to manage the location in the footer also and the links for the socials.</p>
+					<p>Also there is option to add scripts to your pages sucha s Google Analytics</p>
+				</li>
+				<li>
+					<h3 id="sidebar">Sidebar</h3>
+					<p>The "Home" page template uses the "Default Sidebar". The other page templates uses the "Subpage Sidebar".</p>
+					<p>Go to <span class="admin-path">Appearance &raquo; Widgets</span> to set up the widgets that would appear in the each sidebar.</p>
+				</li>
+				<li>
+					<h3 id="shortcodes">Shortcodes</h3>
+					<ul>
+						<li>
+							<h4 id="year-shortcode">[year]</h4>
+							<p>Use this shortcode to display the current year.</p>
+						</li>
+						<li>
+							<h4 id="year-shortcode">[crb_button][/crb_button]</h4>
+							<p>Use this shortcode to display a button.</p>
+							<p>The shortcode has two attributes: 'link' and 'target'.</p>
+							<p>If you want the link of the button to be open in new tab just set up 'target' attribute to 'blank' (target="blank"). By default the link is open in the same window.</p>
+							<p>Setup shortcode content for text of the button.</p>
+							<code>[crb_button link="#"]Shop Now![/crb_button]</code>
+						</li>
+					</ul>
+				</li>
+			</ol>
+		</li>
+	</ol>
+</div>
+</body>
+</html>
