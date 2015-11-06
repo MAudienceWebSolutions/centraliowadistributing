@@ -9,7 +9,7 @@ class GF_Field_Post_Custom_Field extends GF_Field {
 	public $type = 'post_custom_field';
 
 	public function get_form_editor_field_title() {
-		return __( 'Custom Field', 'gravityforms' );
+		return esc_attr__( 'Custom Field', 'gravityforms' );
 	}
 
 	function get_form_editor_field_settings() {
@@ -31,12 +31,12 @@ class GF_Field_Post_Custom_Field extends GF_Field {
 		);
 	}
 
-	public function is_conditional_logic_supported(){
+	public function is_conditional_logic_supported() {
 		return true;
 	}
 
 	public function get_field_input( $form, $value = '', $entry = null ) {
-		$form_id         = $form['id'];
+		$form_id         = absint( $form['id'] );
 		$is_entry_detail = $this->is_entry_detail();
 		$is_form_editor  = $this->is_form_editor();
 
@@ -55,12 +55,12 @@ class GF_Field_Post_Custom_Field extends GF_Field {
 		$logic_event           = $this->get_conditional_logic_event( 'keyup' );
 		$placeholder_attribute = $this->get_field_placeholder_attribute();
 
-		return "<div class='ginput_container'>
+		return "<div class='ginput_container ginput_container_post_custom_field'>
 					<input name='input_{$id}' id='{$field_id}' type='text' value='{$value}' class='{$class}' {$tabindex} {$logic_event} {$placeholder_attribute} {$disabled_text}/>
 				</div>";
 	}
 
-	public function allow_html(){
+	public function allow_html() {
 		return true;
 	}
 }

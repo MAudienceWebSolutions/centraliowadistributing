@@ -138,12 +138,12 @@ function CreateConditionalLogic(objectType, obj){
 }
 
 function GetRuleOperators( objectType, i, fieldId, selectedOperator ) {
-    var str, supportedOperators, operators, str, selected;
+    var str, supportedOperators, operators, selected;
     supportedOperators = {"is":"is","isnot":"isNot", ">":"greaterThan", "<":"lessThan", "contains":"contains", "starts_with":"startsWith", "ends_with":"endsWith"};
     str = "<select id='" + objectType + "_rule_operator_" + i + "' class='gfield_rule_select' onchange='SetRuleProperty(\"" + objectType + "\", " + i + ", \"operator\", jQuery(this).val());var valueSelector=\"#" + objectType + "_rule_value_" + i + "\"; jQuery(valueSelector).replaceWith(GetRuleValues(\"" + objectType + "\", " + i + ",\"" + fieldId + "\", \"\"));jQuery(valueSelector).change();'>";
     operators = IsEntryMeta(fieldId) ? GetOperatorsForMeta(supportedOperators, fieldId) : supportedOperators;
 
-    operators = gform.applyFilters( 'gform_conditional_logic_operators', operators, objectType, fieldId )
+    operators = gform.applyFilters( 'gform_conditional_logic_operators', operators, objectType, fieldId );
 
     jQuery.each(operators,function(operator, stringKey){
         selected = selectedOperator == operator ? "selected='selected'" : "";
@@ -1148,7 +1148,7 @@ var gfMergeTagsObj = function(form) {
                     continue;
 
                 var input = field.inputs[i];
-                if(inputType == "creditcard" && jQuery.inArray(input.id,[parseFloat(field.id + ".2"), parseFloat(field.id + ".3"), parseFloat(field.id + ".5")]) > -1)
+                if(inputType == "creditcard" && jQuery.inArray(parseFloat(input.id),[parseFloat(field.id + ".2"), parseFloat(field.id + ".3"), parseFloat(field.id + ".5")]) > -1)
                     continue;
                 label = GetLabel(field, input.id).replace("'", "\\'");
                 value = "{" + label + ":" + input.id + tagArgs + "}";

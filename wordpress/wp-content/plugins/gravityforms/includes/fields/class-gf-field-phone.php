@@ -10,7 +10,7 @@ class GF_Field_Phone extends GF_Field {
 	public $type = 'phone';
 
 	public function get_form_editor_field_title() {
-		return __( 'Phone', 'gravityforms' );
+		return esc_attr__( 'Phone', 'gravityforms' );
 	}
 
 	function get_form_editor_field_settings() {
@@ -33,7 +33,7 @@ class GF_Field_Phone extends GF_Field {
 		);
 	}
 
-	public function is_conditional_logic_supported(){
+	public function is_conditional_logic_supported() {
 		return true;
 	}
 
@@ -61,7 +61,7 @@ class GF_Field_Phone extends GF_Field {
 		$class_suffix  = $is_entry_detail ? '_admin' : '';
 		$class         = $size . $class_suffix;
 
-		$instruction           = $this->phoneFormat == 'standard' ? __( 'Phone format:', 'gravityforms' ) . ' (###) ###-####' : '';
+		$instruction           = $this->phoneFormat == 'standard' ? esc_html__( 'Phone format:', 'gravityforms' ) . ' (###) ###-####' : '';
 		$instruction_div       = $this->failed_validation && ! empty( $instruction ) ? "<div class='instruction validation_message'>$instruction</div>" : '';
 		$html_input_type       = RGFormsModel::is_html5_enabled() ? 'tel' : 'text';
 		$logic_event           = $this->get_conditional_logic_event( 'keyup' );
@@ -69,7 +69,7 @@ class GF_Field_Phone extends GF_Field {
 
 		$tabindex = $this->get_tabindex();
 
-		return sprintf( "<div class='ginput_container'><input name='input_%d' id='%s' type='{$html_input_type}' value='%s' class='%s' {$tabindex} {$logic_event} {$placeholder_attribute} %s/>{$instruction_div}</div>", $id, $field_id, esc_attr( $value ), esc_attr( $class ), $disabled_text );
+		return sprintf( "<div class='ginput_container ginput_container_phone'><input name='input_%d' id='%s' type='{$html_input_type}' value='%s' class='%s' {$tabindex} {$logic_event} {$placeholder_attribute} %s/>{$instruction_div}</div>", $id, $field_id, esc_attr( $value ), esc_attr( $class ), $disabled_text );
 
 	}
 
@@ -89,6 +89,15 @@ class GF_Field_Phone extends GF_Field {
 		}
 		return $script;
 	}
+
+	public function sanitize_settings() {
+		parent::sanitize_settings();
+
+		if ( $this->phoneFormat && ! in_array( $this->phoneFormat, array( 'standard', 'international' ) ) ) {
+			$this->phoneFormat = 'standard';
+		}
+	}
+
 
 }
 

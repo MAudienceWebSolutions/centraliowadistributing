@@ -39,7 +39,7 @@ class GF_Field_Price extends GF_Field {
 	}
 
 	public function get_field_input( $form, $value = '', $entry = null ) {
-		$form_id         = $form['id'];
+		$form_id         = absint( $form['id'] );
 		$is_entry_detail = $this->is_entry_detail();
 		$is_form_editor  = $this->is_form_editor();
 
@@ -60,7 +60,7 @@ class GF_Field_Price extends GF_Field {
 
 		$tabindex = $this->get_tabindex();
 
-		return "<div class='ginput_container'>
+		return "<div class='ginput_container ginput_container_product_price'>
 					<input name='input_{$id}' id='{$field_id}' type='text' value='{$value}' class='{$class} ginput_amount' {$tabindex} {$logic_event} {$placeholder_attribute} {$disabled_text}/>
 				</div>";
 
